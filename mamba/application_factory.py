@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from mamba import settings, formatters, reporter, runners, example_collector
+from mamba import settings, reporter, runners, example_collector
 from mamba.infrastructure import is_python3
 
 
 class ApplicationFactory(object):
 
-    def __init__(self, arguments):
+    def __init__(self, arguments, formatters):
         self._instances = {}
         self.arguments = arguments
+        self.formatters = formatters
 
     def create_settings(self):
         settings_ = settings.Settings()
@@ -23,9 +24,7 @@ class ApplicationFactory(object):
 
     def create_formatter(self):
         settings = self.create_settings()
-        if settings.format == 'progress':
-            return formatters.ProgressFormatter(settings)
-        return formatters.DocumentationFormatter(settings)
+        return self.formatters[settings.format](settings)
 
     def create_example_collector(self):
         return example_collector.ExampleCollector(self.arguments.specs)

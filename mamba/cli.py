@@ -3,7 +3,7 @@
 import sys
 import argparse
 
-from mamba import application_factory, __version__
+from mamba import application_factory, formatters, __version__
 from mamba.infrastructure import is_python3
 
 
@@ -13,7 +13,9 @@ def main():
         print(__version__)
         return
 
-    factory = application_factory.ApplicationFactory(arguments)
+    factory = application_factory.ApplicationFactory(
+        arguments, formatters.load())
+
     runner = factory.create_runner()
 
     runner.run()

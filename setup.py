@@ -29,5 +29,9 @@ setup(name='mamba',
       entry_points={
           'console_scripts': [
               'mamba = mamba.cli:main'
+          ],
+          'mamba.formatters': [
+              'documentation = mamba.formatters:DocumentationFormatter',
+              'progress = mamba.formatters:ProgressFormatter'
           ]
       })

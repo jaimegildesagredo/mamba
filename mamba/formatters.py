@@ -2,7 +2,12 @@
 
 import traceback
 
+from pkg_resources import iter_entry_points
 from clint.textui import indent, puts, colored
+
+
+def load():
+    return {e.name: e.load() for e in iter_entry_points('mamba.formatters')}
 
 
 class Formatter(object):
